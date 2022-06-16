@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1049761565768",
+    "project_id": "ventura-33a1d",
+    "storage_bucket": "ventura-33a1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049761565768:android:94843e374d2f91eabc5c7d",
+        "android_client_info": {
+          "package_name": "com.example.ventura_hr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049761565768-ea0ihuv3uj0ps8a9dncmhk16jqf00mh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-AED0EnX4BkXIS_qJ7rSMO7xqw1yhL7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049761565768-ea0ihuv3uj0ps8a9dncmhk16jqf00mh4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

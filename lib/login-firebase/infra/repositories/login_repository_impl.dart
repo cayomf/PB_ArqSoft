@@ -19,7 +19,7 @@ class LoginRepositoryImpl implements LoginRepository {
       return Right(user);
     } catch (e) {
       print(e);
-      return Left(ErrorLoginEmail(message: "Error login with Email"));
+      return Left(ErrorLoginEmail(message: "Credenciais Inválidas. Tente novamente."));
     }
   }
 

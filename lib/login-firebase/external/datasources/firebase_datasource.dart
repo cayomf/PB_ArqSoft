@@ -24,7 +24,7 @@ class FirebaseDataSourceImpl implements LoginDataSource {
     return UserModel(
       name: user.displayName != null ? user.displayName : '',
       phoneNumber: user.phoneNumber != null ? user.phoneNumber : '',
-      email: user.email,
+      email: user.cargo,
       uid: user.uid,
     );
   }

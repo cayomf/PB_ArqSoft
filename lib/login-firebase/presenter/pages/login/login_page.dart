@@ -46,8 +46,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: Image.asset("assets/medy-logo.png"),
-                ),
+                    // child: Image.asset("assets/medy-logo.png"),
+                    ),
                 SizedBox(
                   height: 40,
                 ),
