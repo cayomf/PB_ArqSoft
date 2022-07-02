@@ -7,8 +7,16 @@ part 'admin.model.g.dart';
 class AdminModel extends UserModel {
   final String adminId;
 
-  const AdminModel({nome, email, telefone, cep, complemento, required this.adminId})
-      : super(nome: nome, email: email, telefone: telefone, cep: cep, complemento: complemento);
+  const AdminModel({nome, email, telefone, status, endereco, id, accountType, required this.adminId})
+      : super(
+          nome: nome,
+          email: email,
+          telefone: telefone,
+          status: status,
+          endereco: endereco,
+          id: id,
+          accountType: accountType,
+        );
 
   factory AdminModel.fromJson(Map<String, dynamic> json) => _$AdminModelFromJson(json);
   @override

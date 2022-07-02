@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:ventura_hr/shared/services/dio.service.dart';
+import 'package:ventura_hr/shared/services/modular.service.dart';
 import 'package:ventura_hr/shared/widgets/buttons/button-types.dart';
 import 'package:ventura_hr/shared/widgets/buttons/button.dart';
 import 'package:ventura_hr/shared/widgets/custom-text/custom-text.widget.dart';
 import 'package:ventura_hr/shared/widgets/input-radio/input-radio.widget.dart';
 import 'package:ventura_hr/signup/presenter/pages/signup/signup.controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  final DioService dioService;
+  final ModularService modularService;
+
+  const SignupPage({
+    Key? key,
+    required this.dioService,
+    required this.modularService,
+  }) : super(key: key);
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -17,6 +27,11 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends ModularState<SignupPage, SignupController> {
   bool hasSelectedType = false;
   bool hasText = false;
+
+  bool hasNome = false;
+  bool hasTelefone = false;
+  bool hasEndereco = false;
+  bool hasDocumento = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +63,12 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                     key: const Key('empresaRadio')),
                 const SizedBox(height: 24),
                 buildSignupForm(),
+                textFieldBuilder('Qual senha deseja para sua conta?', (value) {
+                  setState(() {
+                    controller.password = value;
+                  });
+                }, 'Senha'),
+                const SizedBox(height: 24),
                 Column(
                   children: [
                     Container(
@@ -55,10 +76,21 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                       child: Observer(
                         builder: (value) {
                           return Button(
-                            onPressed: controller.isValid ? controller.signup : () {},
+                            onPressed: () => {
+                              if (controller.isCredentialsValid &&
+                                  hasNome &&
+                                  hasEndereco &&
+                                  hasTelefone &&
+                                  hasDocumento)
+                                {controller.signup()}
+                            }, //controller.isValid ? controller.signup : () {},
                             type: ButtonTypes.primaryButton,
                             text: 'Cadastrar',
-                            isDisabled: !store.isValid,
+                            isDisabled: !(controller.isCredentialsValid &&
+                                hasNome &&
+                                hasEndereco &&
+                                hasTelefone &&
+                                hasDocumento),
                           );
                         },
                       ),
@@ -88,27 +120,63 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
     return Center(
       child: Column(
         children: [
-          textFieldBuilder(
-              'Qual é o nome da sua empresa?', (value) => controller.updateEnterprise(nome: value), 'Nome'),
+          textFieldBuilder('Qual é o nome da sua empresa?', (value) {
+            if (value != "") {
+              setState(() {
+                hasNome = true;
+              });
+            } else {
+              setState(() {
+                hasNome = false;
+              });
+            }
+            controller.updateEnterprise(nome: value);
+          }, 'Nome'),
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder('Qual é o CEP da sua empresa?', (value) => controller.updateEnterprise(cep: value), 'CEP'),
+          textFieldBuilder('Qual é o endereço de sua empresa?', (value) {
+            if (value != "") {
+              setState(() {
+                hasEndereco = true;
+              });
+            } else {
+              setState(() {
+                hasEndereco = false;
+              });
+            }
+            controller.updateEnterprise(endereco: value);
+          }, 'Endereço'),
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder('Qual é o complemento do endereço de sua empresa?',
-              (value) => controller.updateEnterprise(complemento: value), 'Complemento'),
+          textFieldBuilder('Qual é o telefone da sua empresa?', (value) {
+            if (value != "") {
+              setState(() {
+                hasTelefone = true;
+              });
+            } else {
+              setState(() {
+                hasTelefone = false;
+              });
+            }
+            controller.updateEnterprise(telefone: value);
+          }, 'Telefone'),
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder(
-              'Qual é o telefone da sua empresa?', (value) => controller.updateEnterprise(telefone: value), 'Telefone'),
-          const SizedBox(
-            height: 30,
-          ),
-          textFieldBuilder(
-              'Qual é o CNPJ da sua empresa?', (value) => controller.updateEnterprise(cnpj: value), 'CNPJ'),
+          textFieldBuilder('Qual é o CNPJ da sua empresa?', (value) {
+            if (value != "") {
+              setState(() {
+                hasDocumento = true;
+              });
+            } else {
+              setState(() {
+                hasDocumento = false;
+              });
+            }
+            controller.updateEnterprise(cnpj: value);
+          }, 'CNPJ'),
           const SizedBox(
             height: 30,
           ),
@@ -119,7 +187,6 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder('Qual senha deseja para sua conta?', (value) => controller.password, 'Senha'),
         ],
       ),
     );
@@ -129,25 +196,63 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
     return Center(
       child: Column(
         children: [
-          textFieldBuilder('Qual é o seu nome?', (value) => controller.updateCandidate(nome: value), 'Nome'),
+          textFieldBuilder('Qual é o seu nome?', (value) {
+            if (value != "") {
+              setState(() {
+                hasNome = true;
+              });
+            } else {
+              setState(() {
+                hasNome = false;
+              });
+            }
+            controller.updateCandidate(nome: value);
+          }, 'Nome'),
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder('Qual é seu o CEP?', (value) => controller.updateCandidate(cep: value), 'CEP'),
+          textFieldBuilder('Qual é o seu endereço?', (value) {
+            if (value != "") {
+              setState(() {
+                hasEndereco = true;
+              });
+            } else {
+              setState(() {
+                hasEndereco = false;
+              });
+            }
+            controller.updateCandidate(endereco: value);
+          }, 'Complemento'),
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder('Qual é o complemento do seu endereço?',
-              (value) => controller.updateCandidate(complemento: value), 'Complemento'),
+          textFieldBuilder('Qual é o seu telefone?', (value) {
+            if (value != "") {
+              setState(() {
+                hasTelefone = true;
+              });
+            } else {
+              setState(() {
+                hasTelefone = false;
+              });
+            }
+            controller.updateCandidate(telefone: value);
+          }, 'Telefone'),
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder(
-              'Qual é o seu telefone?', (value) => controller.updateCandidate(telefone: value), 'Telefone'),
-          const SizedBox(
-            height: 30,
-          ),
-          textFieldBuilder('Qual é o seu CPF?', (value) => controller.updateCandidate(cpf: value), 'CPF'),
+          textFieldBuilder('Qual é o seu CPF?', (value) {
+            if (value != "") {
+              setState(() {
+                hasDocumento = true;
+              });
+            } else {
+              setState(() {
+                hasDocumento = false;
+              });
+            }
+            controller.updateCandidate(cpf: value);
+          }, 'CPF'),
           const SizedBox(
             height: 30,
           ),
@@ -158,24 +263,23 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
           const SizedBox(
             height: 30,
           ),
-          textFieldBuilder('Qual senha deseja para sua conta?', (value) => controller.password, 'Senha'),
         ],
       ),
     );
   }
 
-  Widget textFieldBuilder(String text, Function onChanged, String labelText) {
+  Widget textFieldBuilder(String text, Function(String) onChanged, String labelText) {
     return Column(
       children: [
-        const Text('Qual senha deseja para sua conta?'),
+        Text(text),
         const SizedBox(
           height: 10,
         ),
         TextField(
-          onChanged: (value) => controller.password,
-          decoration: const InputDecoration(
+          onChanged: onChanged,
+          decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: "Email",
+            labelText: labelText,
           ),
         ),
       ],
@@ -205,5 +309,13 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
         )
       ],
     );
+  }
+
+  signupUser() {
+    FirebaseAuth.instance.createUserWithEmailAndPassword(email: controller.email, password: controller.password);
+    if (controller.tipoConta == TipoConta.candidato) {
+      //widget.dioService.post('http://192.168.1.72:8080/user/createUser', resposta.toJson());
+    } else if (controller.tipoConta == TipoConta.empresa) {}
+    Modular.to.pushNamed('candidato-home');
   }
 }

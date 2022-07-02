@@ -25,30 +25,6 @@ class AdminRepositoryImpl implements AdminRepository {
   }
 
   @override
-  Future<Result<void>> edit({required AdminModel admin}) async {
-    final url = Endpoints.admin.edit.buildUrl();
-    try {
-      await dio.post(url, {"admin": admin});
-    } on DioError catch (error) {
-      return ErrorResult.fromErrorResponse(error.response);
-    }
-
-    return const SuccessResult(null);
-  }
-
-  @override
-  Future<Result<void>> delete({required String id}) async {
-    final url = Endpoints.admin.delete.buildUrl();
-    try {
-      await dio.post(url, {"id": id});
-    } on DioError catch (error) {
-      return ErrorResult.fromErrorResponse(error.response);
-    }
-
-    return const SuccessResult(null);
-  }
-
-  @override
   Future<Result<AdminModel>> getById({required String id}) async {
     final url = Endpoints.admin.getById.buildUrl();
     Response<Map<String, dynamic>> response;
@@ -60,36 +36,31 @@ class AdminRepositoryImpl implements AdminRepository {
     }
 
     var admin = AdminModel.fromJson(response.data!);
-    return SuccessResult(logradouro);
+    return SuccessResult(admin);
   }
 
   @override
   Future<Result<List<AdminModel>>> getAll() async {
     final url = Endpoints.admin.getAll.buildUrl();
-
+    Response<List<dynamic>> response;
     try {
-      await dio.get(url);
+      response = await dio.get(url);
     } on DioError catch (error) {
       return ErrorResult.fromErrorResponse(error.response);
     }
 
-    return const SuccessResult(null);
-  }
+    final admins = response.data!.map((e) => AdminModel.fromJson(e as Map<String, dynamic>)).toList();
 
-  @override
-  Future<Result<void>> validateToken(String twoFactorToken,
-      {required String username, required bool manterTokenAtivo}) async {
-    final url = Endpoints.user.validateToken.buildUrl();
+    return SuccessResult(admins);
 
-    try {
-      await dio.post(url, {
-        "twoFactorToken": twoFactorToken,
-        "username": username,
-        "manterTokenAtivo": manterTokenAtivo,
-      });
-    } on DioError catch (error) {
-      return ErrorResult.fromErrorResponse(error.response);
-    }
-    return const SuccessResult(null);
+    // final url = Endpoints.admin.getAll.buildUrl();
+
+    // try {
+    //   await dio.get(url);
+    // } on DioError catch (error) {
+    //   return ErrorResult.fromErrorResponse(error.response);
+    // }
+
+    // return const SuccessResult(null);
   }
 }

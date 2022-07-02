@@ -7,7 +7,8 @@ part of 'signup.controller.dart';
 // **************************************************************************
 
 final $SignupController = BindInject(
-  (i) => SignupController(i<LoadingDialog>()),
+  (i) => SignupController(i<LoginWithEmail>(), i<AuthStore>(),
+      i<RegisterUser>(), i<LoadingDialog>(), i<UserUsecase>()),
   isSingleton: true,
   isLazy: true,
 );
@@ -26,11 +27,12 @@ mixin _$SignupController on _SignupControllerBase, Store {
           Computed<LoginCredential>(() => super.credential,
               name: '_SignupControllerBase.credential'))
       .value;
-  Computed<bool>? _$isValidComputed;
+  Computed<bool>? _$isCredentialsValidComputed;
 
   @override
-  bool get isValid => (_$isValidComputed ??= Computed<bool>(() => super.isValid,
-          name: '_SignupControllerBase.isValid'))
+  bool get isCredentialsValid => (_$isCredentialsValidComputed ??=
+          Computed<bool>(() => super.isCredentialsValid,
+              name: '_SignupControllerBase.isCredentialsValid'))
       .value;
 
   final _$tipoContaAtom = Atom(name: '_SignupControllerBase.tipoConta');
@@ -128,8 +130,7 @@ mixin _$SignupController on _SignupControllerBase, Store {
 
   @override
   dynamic updateAdmin(
-      {String? cep,
-      String? complemento,
+      {String? endereco,
       String? email,
       String? telefone,
       String? adminId,
@@ -138,8 +139,7 @@ mixin _$SignupController on _SignupControllerBase, Store {
         name: '_SignupControllerBase.updateAdmin');
     try {
       return super.updateAdmin(
-          cep: cep,
-          complemento: complemento,
+          endereco: endereco,
           email: email,
           telefone: telefone,
           adminId: adminId,
@@ -151,8 +151,7 @@ mixin _$SignupController on _SignupControllerBase, Store {
 
   @override
   dynamic updateEnterprise(
-      {String? cep,
-      String? complemento,
+      {String? endereco,
       String? email,
       String? telefone,
       String? cnpj,
@@ -161,8 +160,7 @@ mixin _$SignupController on _SignupControllerBase, Store {
         name: '_SignupControllerBase.updateEnterprise');
     try {
       return super.updateEnterprise(
-          cep: cep,
-          complemento: complemento,
+          endereco: endereco,
           email: email,
           telefone: telefone,
           cnpj: cnpj,
@@ -174,8 +172,7 @@ mixin _$SignupController on _SignupControllerBase, Store {
 
   @override
   dynamic updateCandidate(
-      {String? cep,
-      String? complemento,
+      {String? endereco,
       String? email,
       String? telefone,
       String? cpf,
@@ -184,8 +181,7 @@ mixin _$SignupController on _SignupControllerBase, Store {
         name: '_SignupControllerBase.updateCandidate');
     try {
       return super.updateCandidate(
-          cep: cep,
-          complemento: complemento,
+          endereco: endereco,
           email: email,
           telefone: telefone,
           cpf: cpf,
@@ -205,7 +201,7 @@ enterprise: ${enterprise},
 email: ${email},
 password: ${password},
 credential: ${credential},
-isValid: ${isValid}
+isCredentialsValid: ${isCredentialsValid}
     ''';
   }
 }

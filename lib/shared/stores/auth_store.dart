@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:asuka/asuka.dart' as asuka;
+import 'package:ventura_hr/area-logada/domain/entities/vacancy.entity.dart';
 import 'package:ventura_hr/login-firebase/domain/entities/logged_user_info.dart';
 import 'package:ventura_hr/login-firebase/domain/usecases/get_logged_user.dart';
 import 'package:ventura_hr/login-firebase/domain/usecases/logout.dart';
+import 'package:ventura_hr/signup/domain/entities/user.entity.dart';
 
 part 'auth_store.g.dart';
 
@@ -21,6 +23,12 @@ abstract class _AuthStoreBase with Store {
 
   @computed
   bool get isLogged => user != null;
+
+  @observable
+  User? userData;
+
+  @observable
+  List<Vacancy> listaVagas = [];
 
   @action
   void setUser(LoggedUserInfo? value) => user = value;

@@ -4,15 +4,13 @@ part 'criterion.model.g.dart';
 
 @JsonSerializable()
 class CriterionModel {
-  final String vagaId;
+  final int id;
   final String descricao;
-  final int relevancia;
   final int peso;
 
   const CriterionModel({
-    required this.vagaId,
+    required this.id,
     required this.descricao,
-    required this.relevancia,
     required this.peso,
   });
 

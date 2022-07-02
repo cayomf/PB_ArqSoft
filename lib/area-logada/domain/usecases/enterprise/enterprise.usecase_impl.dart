@@ -17,8 +17,8 @@ class EnterpriseUsecaseImpl implements EnterpriseUsecase {
       nome: enterprise.nome,
       email: enterprise.email,
       telefone: enterprise.telefone,
-      cep: enterprise.cep,
-      complemento: enterprise.complemento,
+      status: enterprise.status,
+      endereco: enterprise.endereco,
     );
 
     return await repository.create(enterprise: enterpriseModelObj);
@@ -31,8 +31,8 @@ class EnterpriseUsecaseImpl implements EnterpriseUsecase {
       nome: enterprise.nome,
       email: enterprise.email,
       telefone: enterprise.telefone,
-      cep: enterprise.cep,
-      complemento: enterprise.complemento,
+      status: enterprise.status,
+      endereco: enterprise.endereco,
     );
 
     return await repository.edit(enterprise: enterpriseModelObj);
@@ -52,8 +52,8 @@ class EnterpriseUsecaseImpl implements EnterpriseUsecase {
         email: result.getSuccessData().email,
         telefone: result.getSuccessData().telefone,
         cnpj: result.getSuccessData().cnpj,
-        cep: result.getSuccessData().cep,
-        complemento: result.getSuccessData().complemento,
+        status: result.getSuccessData().status,
+        endereco: result.getSuccessData().endereco,
       );
 
       return SuccessResult(enterprise);
@@ -71,8 +71,8 @@ class EnterpriseUsecaseImpl implements EnterpriseUsecase {
       result.getSuccessData().map(
             (admin) => enterprises.add(
               Enterprise(
-                cep: admin.cep,
-                complemento: admin.complemento,
+                status: admin.status,
+                endereco: admin.endereco,
                 nome: admin.nome,
                 email: admin.email,
                 telefone: admin.telefone,

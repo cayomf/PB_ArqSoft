@@ -16,12 +16,20 @@ class VacancyUsecaseImpl implements VacancyUsecase {
   Future<Result<void>> create({required Vacancy vacancy}) async {
     List<CriterionModel> criterios = [];
 
-    vacancy.criterios.map((criterio) => criterios.add(CriterionModel(
-        vagaId: criterio.vagaId, descricao: criterio.descricao, relevancia: criterio.relevancia, peso: criterio.peso)));
+    vacancy.criterios.map(
+      (criterio) => criterios.add(
+        CriterionModel(
+          id: criterio.id,
+          descricao: criterio.descricao,
+          peso: criterio.peso,
+        ),
+      ),
+    );
     VacancyModel vacancyModelObj = VacancyModel(
+      id: vacancy.id!,
       cargo: vacancy.cargo,
-      cep: vacancy.cep,
-      complemento: vacancy.complemento,
+      salario: vacancy.salario,
+      endereco: vacancy.endereco,
       dataCriacao: vacancy.dataCriacao,
       criterios: criterios,
       empresaId: vacancy.empresaId,
@@ -35,12 +43,20 @@ class VacancyUsecaseImpl implements VacancyUsecase {
   Future<Result<void>> edit({required Vacancy vacancy}) async {
     List<CriterionModel> criterios = [];
 
-    vacancy.criterios.map((criterio) => criterios.add(CriterionModel(
-        vagaId: criterio.vagaId, descricao: criterio.descricao, relevancia: criterio.relevancia, peso: criterio.peso)));
+    vacancy.criterios.map(
+      (criterio) => criterios.add(
+        CriterionModel(
+          id: criterio.id,
+          descricao: criterio.descricao,
+          peso: criterio.peso,
+        ),
+      ),
+    );
     VacancyModel vacancyModelObj = VacancyModel(
+      id: vacancy.id,
       cargo: vacancy.cargo,
-      cep: vacancy.cep,
-      complemento: vacancy.complemento,
+      salario: vacancy.salario,
+      endereco: vacancy.endereco,
       dataCriacao: vacancy.dataCriacao,
       criterios: criterios,
       empresaId: vacancy.empresaId,
@@ -51,11 +67,6 @@ class VacancyUsecaseImpl implements VacancyUsecase {
   }
 
   @override
-  Future<Result<void>> delete({required String id}) async {
-    return await repository.delete(id: id);
-  }
-
-  @override
   Future<Result<Vacancy>> getById({required String id}) async {
     var result = await repository.getById(id: id);
     List<Criterion> criteria = [];
@@ -63,18 +74,15 @@ class VacancyUsecaseImpl implements VacancyUsecase {
     if (result.isSuccess()) {
       criteria.map(
         (criterion) => criteria.add(
-          Criterion(
-              vagaId: criterion.vagaId,
-              descricao: criterion.descricao,
-              relevancia: criterion.relevancia,
-              peso: criterion.peso),
+          Criterion(id: criterion.id, descricao: criterion.descricao, peso: criterion.peso),
         ),
       );
       Vacancy candidacy = Vacancy(
+        id: result.getSuccessData().id,
         criterios: criteria,
         cargo: result.getSuccessData().cargo,
-        cep: result.getSuccessData().cep,
-        complemento: result.getSuccessData().complemento,
+        salario: result.getSuccessData().salario,
+        endereco: result.getSuccessData().endereco,
         dataCriacao: result.getSuccessData().dataCriacao,
         empresaId: result.getSuccessData().empresaId,
         status: result.getSuccessData().status,
@@ -98,14 +106,14 @@ class VacancyUsecaseImpl implements VacancyUsecase {
         vacancy.criterios.map((criterio) => criterios.add(Criterion(
               descricao: criterio.descricao,
               peso: criterio.peso,
-              relevancia: criterio.relevancia,
-              vagaId: criterio.vagaId,
+              id: criterio.id,
             )));
         vacancies.add(
           Vacancy(
+            id: vacancy.id,
             cargo: vacancy.cargo,
-            cep: vacancy.cep,
-            complemento: vacancy.complemento,
+            salario: vacancy.salario,
+            endereco: vacancy.endereco,
             criterios: criterios,
             dataCriacao: vacancy.dataCriacao,
             empresaId: vacancy.empresaId,

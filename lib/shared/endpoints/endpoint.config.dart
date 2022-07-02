@@ -9,14 +9,15 @@ import 'package:ventura_hr/shared/endpoints/controllers/vacancy.controller.dart'
 import 'package:ventura_hr/shared/endpoints/endpoint.dart';
 
 class Endpoints {
-  static String get urlServer => '';
+  static String get urlServer => 'http://192.168.1.72:8080';
 
   static UserController user = UserController(
-    create: Endpoint(baseUrl: urlServer, path: '/createUser'),
+    create: Endpoint(baseUrl: urlServer, path: '/user/createUser'),
     getById: Endpoint(baseUrl: urlServer, path: '/userDetails'),
     edit: Endpoint(baseUrl: urlServer, path: '/editUser'),
     delete: Endpoint(baseUrl: urlServer, path: '/deleteUser'),
     getAll: Endpoint(baseUrl: urlServer, path: '/getAllUsers'),
+    findByEmail: Endpoint(baseUrl: urlServer, path: '/user/findByEmail'),
   );
 
   static AdminController admin = AdminController(
@@ -72,6 +73,6 @@ class Endpoints {
     getById: Endpoint(baseUrl: urlServer, path: '/vacancyDetails'),
     edit: Endpoint(baseUrl: urlServer, path: '/editVacancy'),
     delete: Endpoint(baseUrl: urlServer, path: '/deleteVacancy'),
-    getAll: Endpoint(baseUrl: urlServer, path: '/getAllVacancys'),
+    getAll: Endpoint(baseUrl: urlServer, path: '/getAllVacancies'),
   );
 }

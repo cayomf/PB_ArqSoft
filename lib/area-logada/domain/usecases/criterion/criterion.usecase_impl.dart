@@ -15,8 +15,7 @@ class CriterionUsecaseImpl implements CriterionUsecase {
     CriterionModel criterionModelObj = CriterionModel(
       descricao: criterion.descricao,
       peso: criterion.peso,
-      relevancia: criterion.relevancia,
-      vagaId: criterion.vagaId,
+      id: criterion.id,
     );
 
     return await repository.create(criterion: criterionModelObj);
@@ -27,8 +26,7 @@ class CriterionUsecaseImpl implements CriterionUsecase {
     CriterionModel criterionModelObj = CriterionModel(
       descricao: criterion.descricao,
       peso: criterion.peso,
-      relevancia: criterion.relevancia,
-      vagaId: criterion.vagaId,
+      id: criterion.id,
     );
 
     return await repository.edit(criterion: criterionModelObj);
@@ -47,8 +45,7 @@ class CriterionUsecaseImpl implements CriterionUsecase {
       Criterion criterion = Criterion(
         descricao: result.getSuccessData().descricao,
         peso: result.getSuccessData().peso,
-        relevancia: result.getSuccessData().relevancia,
-        vagaId: result.getSuccessData().vagaId,
+        id: result.getSuccessData().id,
       );
 
       return SuccessResult(criterion);
@@ -68,8 +65,7 @@ class CriterionUsecaseImpl implements CriterionUsecase {
           Criterion(
             descricao: criterion.descricao,
             peso: criterion.peso,
-            relevancia: criterion.relevancia,
-            vagaId: criterion.vagaId,
+            id: criterion.id,
           ),
         );
       });

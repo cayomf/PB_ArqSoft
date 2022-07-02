@@ -13,8 +13,8 @@ class AdminUsecaseImpl implements AdminUsecase {
   @override
   Future<Result<void>> create({required Admin admin}) async {
     AdminModel adminModelObj = AdminModel(
-      cep: admin.cep,
-      complemento: admin.complemento,
+      status: admin.status,
+      endereco: admin.endereco,
       nome: admin.nome,
       email: admin.email,
       telefone: admin.telefone,
@@ -27,8 +27,8 @@ class AdminUsecaseImpl implements AdminUsecase {
   @override
   Future<Result<void>> edit({required Admin admin}) async {
     AdminModel adminModelObj = AdminModel(
-      cep: admin.cep,
-      complemento: admin.complemento,
+      status: admin.status,
+      endereco: admin.endereco,
       nome: admin.nome,
       email: admin.email,
       telefone: admin.telefone,
@@ -36,11 +36,6 @@ class AdminUsecaseImpl implements AdminUsecase {
     );
 
     return await repository.create(admin: adminModelObj);
-  }
-
-  @override
-  Future<Result<void>> delete({required String id}) async {
-    return await repository.delete(id: id);
   }
 
   @override
@@ -52,8 +47,8 @@ class AdminUsecaseImpl implements AdminUsecase {
         email: result.getSuccessData().email,
         telefone: result.getSuccessData().telefone,
         adminId: result.getSuccessData().adminId,
-        cep: result.getSuccessData().cep,
-        complemento: result.getSuccessData().complemento,
+        status: result.getSuccessData().status,
+        endereco: result.getSuccessData().endereco,
       );
 
       return SuccessResult(admin);
@@ -69,8 +64,8 @@ class AdminUsecaseImpl implements AdminUsecase {
 
     if (result.isSuccess()) {
       result.getSuccessData().map((admin) => admins.add(Admin(
-            cep: admin.cep,
-            complemento: admin.complemento,
+            status: admin.status,
+            endereco: admin.endereco,
             nome: admin.nome,
             email: admin.email,
             telefone: admin.telefone,

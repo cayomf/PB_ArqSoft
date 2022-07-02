@@ -41,6 +41,36 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     });
   }
 
+  final _$userDataAtom = Atom(name: '_AuthStoreBase.userData');
+
+  @override
+  User? get userData {
+    _$userDataAtom.reportRead();
+    return super.userData;
+  }
+
+  @override
+  set userData(User? value) {
+    _$userDataAtom.reportWrite(value, super.userData, () {
+      super.userData = value;
+    });
+  }
+
+  final _$listaVagasAtom = Atom(name: '_AuthStoreBase.listaVagas');
+
+  @override
+  List<Vacancy> get listaVagas {
+    _$listaVagasAtom.reportRead();
+    return super.listaVagas;
+  }
+
+  @override
+  set listaVagas(List<Vacancy> value) {
+    _$listaVagasAtom.reportWrite(value, super.listaVagas, () {
+      super.listaVagas = value;
+    });
+  }
+
   final _$_AuthStoreBaseActionController =
       ActionController(name: '_AuthStoreBase');
 
@@ -59,6 +89,8 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   String toString() {
     return '''
 user: ${user},
+userData: ${userData},
+listaVagas: ${listaVagas},
 isLogged: ${isLogged}
     ''';
   }

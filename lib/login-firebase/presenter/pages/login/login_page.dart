@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:ventura_hr/shared/services/modular.service.dart';
 import 'package:ventura_hr/shared/theme/colors.dart';
 import 'package:ventura_hr/shared/widgets/buttons/button-types.dart';
 import 'package:ventura_hr/shared/widgets/buttons/button.dart';
@@ -8,6 +9,10 @@ import 'package:ventura_hr/shared/widgets/buttons/button.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
+  final ModularService modularService;
+
+  const LoginPage({Key? key, required this.modularService}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -72,20 +77,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                 SizedBox(
                   height: 20,
                 ),
-                // GestureDetector(
-                //   onTap: () {
-                //     Modular.to.pushNamed("/phone");
-                //   },
-                //   child: Align(
-                //     alignment: Alignment.bottomRight,
-                //     child: Text(
-                //       "Phone Login",
-                //       style: TextStyle(
-                //         decoration: TextDecoration.underline,
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -96,7 +87,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                       child: Observer(
                         builder: (_) {
                           return Button(
-                            onPressed: controller.isValid ? controller.enterEmail : () {},
+                            onPressed: () {
+                              controller.isValid ? controller.enterEmail() : () {};
+                            },
                             type: ButtonTypes.primaryButton,
                             text: 'Entrar',
                             isDisabled: !store.isValid,
@@ -107,11 +100,14 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   ],
                 ),
                 TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Não possui uma conta? Fale conosco!',
-                      style: TextStyle(color: ColorsTheme.support300, fontSize: 16),
-                    ))
+                  onPressed: () {
+                    widget.modularService.pushNamed('/cadastro');
+                  },
+                  child: Text(
+                    'Não possui uma conta? Cadastre-se!',
+                    style: TextStyle(color: ColorsTheme.support300, fontSize: 16),
+                  ),
+                ),
               ],
             ),
           ),

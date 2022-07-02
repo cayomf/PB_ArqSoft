@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:ventura_hr/shared/services/modular.service.dart';
 
 import 'register_controller.dart';
 
 class RegisterPage extends StatefulWidget {
+  final ModularService modularService;
+
+  const RegisterPage({Key? key, required this.modularService}) : super(key: key);
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState
-    extends ModularState<RegisterPage, RegisterController> {
+class _RegisterPageState extends ModularState<RegisterPage, RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +66,11 @@ class _RegisterPageState
                 height: 20,
               ),
               Observer(builder: (_) {
-                return RaisedButton(
-                  onPressed: controller.isValid ? controller.enterEmail : null,
-                  child: Text("ENTER"),
+                return ElevatedButton(
+                  onPressed: () {
+                    controller.isValid ? controller.enterEmail : null;
+                  },
+                  child: Text("Cadastrar!"),
                 );
               })
             ],

@@ -23,11 +23,11 @@ class _EnterpriseHomePageState extends State<EnterpriseHomePage> {
               SizedBox(height: 20),
               Button(text: 'Perfil', onPressed: () {}, type: ButtonTypes.primaryButton, isDisabled: false),
               SizedBox(height: 20),
-              ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container();
-                },
-              )
+              // ListView.builder(
+              //   itemBuilder: (context, index) {
+              //     return Container();
+              //   },
+              // )
             ],
           ),
         ),

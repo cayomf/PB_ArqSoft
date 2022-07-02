@@ -1,30 +1,51 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:ventura_hr/shared/endpoints/endpoint.config.dart';
+import 'package:ventura_hr/shared/services/dio.service.dart';
+import 'package:ventura_hr/signup/domain/entities/user.entity.dart';
+import 'package:ventura_hr/signup/external/repositories/user.repository_impl.dart';
 
-import 'package:ventura_hr/main.dart';
+import 'repository.test.helper.dart';
+import 'widget_test.mocks.dart';
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+@GenerateMocks([Response, DioService])
+main() {
+  late MockDioService dio;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  getInstance() {
+    return UserRepositoryImpl(dio);
+  }
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  setUp(() {
+    dio = MockDioService();
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  group("Create", () {
+    User user = const User(
+      accountType: 1,
+      email: '',
+      endereco: '',
+      id: null,
+      nome: '',
+      status: null,
+      telefone: '',
+    );
+
+    call() => getInstance().create(user: user);
+
+    commonGetSuccessTest(
+      'deve obter informações da localização do cep informado',
+      getDio: () => dio,
+      methodCall: call,
+      expectedUrl: Endpoints.user.create.buildUrl(),
+      responseMock: null,
+      expectedResultData: null,
+    );
+
+    commonGetFailureTest(
+      getDio: () => dio,
+      methodCall: call,
+    );
   });
 }

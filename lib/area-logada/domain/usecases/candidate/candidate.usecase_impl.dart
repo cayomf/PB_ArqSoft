@@ -13,8 +13,8 @@ class CandidateUsecaseImpl implements CandidateUsecase {
   @override
   Future<Result<void>> create({required Candidate candidate}) async {
     CandidateModel candidateModelObj = CandidateModel(
-      cep: candidate.cep,
-      complemento: candidate.complemento,
+      status: candidate.status,
+      endereco: candidate.endereco,
       cpf: candidate.cpf,
       nome: candidate.nome,
       email: candidate.email,
@@ -27,8 +27,8 @@ class CandidateUsecaseImpl implements CandidateUsecase {
   @override
   Future<Result<void>> edit({required Candidate candidate}) async {
     CandidateModel candidateModelObj = CandidateModel(
-      cep: candidate.cep,
-      complemento: candidate.complemento,
+      status: candidate.status,
+      endereco: candidate.endereco,
       cpf: candidate.cpf,
       nome: candidate.nome,
       email: candidate.email,
@@ -52,8 +52,8 @@ class CandidateUsecaseImpl implements CandidateUsecase {
         email: result.getSuccessData().email,
         telefone: result.getSuccessData().telefone,
         cpf: result.getSuccessData().cpf,
-        cep: result.getSuccessData().cep,
-        complemento: result.getSuccessData().complemento,
+        status: result.getSuccessData().status,
+        endereco: result.getSuccessData().endereco,
       );
 
       return SuccessResult(candidate);
@@ -71,8 +71,8 @@ class CandidateUsecaseImpl implements CandidateUsecase {
       result.getSuccessData().map(
             (candidate) => candidates.add(
               Candidate(
-                cep: candidate.cep,
-                complemento: candidate.complemento,
+                status: candidate.status,
+                endereco: candidate.endereco,
                 nome: candidate.nome,
                 email: candidate.email,
                 telefone: candidate.telefone,

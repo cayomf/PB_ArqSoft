@@ -11,17 +11,21 @@ CandidateModel _$CandidateModelFromJson(Map<String, dynamic> json) =>
       nome: json['nome'],
       email: json['email'],
       telefone: json['telefone'],
-      cep: json['cep'],
-      complemento: json['complemento'],
+      status: json['status'],
+      endereco: json['endereco'],
+      id: json['id'],
+      accountType: json['accountType'],
       cpf: json['cpf'] as String,
     );
 
 Map<String, dynamic> _$CandidateModelToJson(CandidateModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'nome': instance.nome,
       'email': instance.email,
       'telefone': instance.telefone,
-      'cep': instance.cep,
-      'complemento': instance.complemento,
+      'endereco': instance.endereco,
+      'status': instance.status,
+      'accountType': instance.accountType,
       'cpf': instance.cpf,
     };

@@ -6,6 +6,7 @@ class UserController {
   final Endpoint delete;
   final Endpoint getById;
   final Endpoint getAll;
+  final Endpoint findByEmail;
 
   const UserController({
     required this.create,
@@ -13,5 +14,6 @@ class UserController {
     required this.delete,
     required this.getById,
     required this.getAll,
+    required this.findByEmail,
   });
 }

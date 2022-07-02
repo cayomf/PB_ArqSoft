@@ -8,16 +8,14 @@ part of 'criterion.model.dart';
 
 CriterionModel _$CriterionModelFromJson(Map<String, dynamic> json) =>
     CriterionModel(
-      vagaId: json['vagaId'] as String,
+      id: json['id'] as int,
       descricao: json['descricao'] as String,
-      relevancia: json['relevancia'] as int,
       peso: json['peso'] as int,
     );
 
 Map<String, dynamic> _$CriterionModelToJson(CriterionModel instance) =>
     <String, dynamic>{
-      'vagaId': instance.vagaId,
+      'id': instance.id,
       'descricao': instance.descricao,
-      'relevancia': instance.relevancia,
       'peso': instance.peso,
     };

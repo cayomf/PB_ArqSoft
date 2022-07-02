@@ -5,20 +5,22 @@ part 'vacancy.model.g.dart';
 
 @JsonSerializable()
 class VacancyModel {
+  final int? id;
   final String empresaId;
   final DateTime dataCriacao;
   final String cargo;
-  final String complemento;
-  final String cep;
+  final String endereco;
   final String status;
+  final double salario;
   final List<CriterionModel> criterios;
 
   const VacancyModel({
+    required this.id,
     required this.empresaId,
     required this.dataCriacao,
     required this.cargo,
-    required this.complemento,
-    required this.cep,
+    required this.endereco,
+    required this.salario,
     required this.status,
     required this.criterios,
   });
